@@ -28,10 +28,10 @@
     <body class="antialiased">
         <ul class="nav nav-pills nav-fill p-5">
             <li class="nav-item">
-                <a class="nav-link active" href="#">Турниры онлайн</a>
+                <a class="nav-link {{ Request::is('/') ? 'active' : '' }}" href="{{ route('/') }}">Турниры онлайн</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Рейтинг игроков</a>
+                <a class="nav-link" href="{{ route('rating') }}">Рейтинг игроков</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Игры в процессе</a>
@@ -77,7 +77,7 @@
         </ul>
         <div class="relative flex items-top justify-center min-h-screen pt-10 py-4 sm:pt-0">
             <div class="mx-auto sm:px-6 lg:px-8 cr-white w-100 mt-5">
-                <td><a href="{{ route('create_match') }}"><button class="p-3 font-weight-bolder mb-5" style="background-color: #3BC8F5; color: white;border-radius: 20px;">Создать матч</button></a></td>
+                <td><a href="{{ route('matches.create') }}"><button class="p-3 font-weight-bolder mb-5" style="background-color: #3BC8F5; color: white;border-radius: 20px;">Создать матч</button></a></td>
                 <table class="table tournament_styles">
                     <thead>
                     <tr>

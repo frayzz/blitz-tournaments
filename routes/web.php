@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\MatchController;
+use App\Http\Controllers\RatingController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,14 +14,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [MatchController::class, 'index'])->name('/');
+Route::get('/matches/create', [MatchController::class, 'create'])->name('matches.create');
+Route::post('/matches', [MatchController::class, 'store'])->name('matches.store');
+Route::get('/matches/{match}', [MatchController::class, 'show'])->name('matches.show');
+Route::get('/matches/{match}/edit', [MatchController::class, 'edit'])->name('matches.edit');
+Route::put('/matches/{match}', [MatchController::class, 'update'])->name('matches.update');
+Route::delete('/matches/{match}', [MatchController::class, 'destroy'])->name('matches.destroy');
 
-Route::get('/create-match', 'CreateController@yourAction')->name('create_match');
+Route::get('/rating', [RatingController::class, 'index'])->name('rating');
 
+Route::get('/active', [RatingController::class, 'index'])->name('active');
+/*
 Route::get('/dashboard', function () {
     return view('welcome');
 })->middleware(['auth'])->name('/');
+*/
 
 require __DIR__.'/auth.php';
