@@ -17,8 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/create-match', 'CreateController@yourAction')->name('create_match');
+
 Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+    return view('welcome');
+})->middleware(['auth'])->name('/');
 
 require __DIR__.'/auth.php';
