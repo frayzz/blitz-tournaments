@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MatchController;
 use App\Http\Controllers\RatingController;
+use App\Http\Controllers\ActiveController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,7 +25,7 @@ Route::delete('/matches/{match}', [MatchController::class, 'destroy'])->name('ma
 
 Route::get('/rating', [RatingController::class, 'index'])->name('rating');
 
-Route::get('/active', [RatingController::class, 'index'])->name('active');
+Route::get('/active', [ActiveController::class, 'index'])->name('active');
 /*
 Route::get('/dashboard', function () {
     return view('welcome');
