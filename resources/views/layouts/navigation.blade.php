@@ -10,38 +10,40 @@
     </li>
     <li class="nav-item">
 
-        @if (Route::has('login'))
-            <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-                @auth
-                    <div class="btn-group">
-                        <div type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{ Auth::user()->name }}
-                        </div>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Профиль</a>
-                            <div class="dropdown-divider"></div>
-                            <!-- Authentication -->
-                            <form method="POST" action="{{ route('logout') }}">
+
+        <ul class="navbar-nav mt-2 mt-lg-0">
+            <li class="nav-item">
+            @guest
+                <a href="{{ route('login') }}" class="btn">Войти</a>
+
+                @if (Route::has('register'))
+                    <a href="{{ route('register') }}" class="btn btn-dark">Зарегестрироваться</a>
+                @endif
+            @else
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ Auth::user()->name }}
+                    </a>
+                    <ul class="dropdown-menu justify-center" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{{ route('profile') }}">Профиль</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                {{ __('Выйти') }}
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
-
-                                <x-dropdown-link class="dropdown-item" :href="route('logout')"
-                                                 onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                    {{ __('Log Out') }}
-                                </x-dropdown-link>
                             </form>
-                        </div>
-                    </div>
-
-
-                @else
-                    <a href="{{ route('login') }}" class="btn">Войти</a>
-
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="btn btn-dark">Зарегестрироваться</a>
-                    @endif
-                @endauth
-            </div>
-        @endif
+                        </li>
+                    </ul>
+                </li>
+            @endguest
+        </ul>
     </li>
+
 </ul>
+
+
