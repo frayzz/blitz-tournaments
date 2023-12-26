@@ -13,6 +13,7 @@ class CreateTournamentsTable extends Migration
             $table->string('name');
             $table->string('game_type');
             $table->integer('number_of_players');
+            $table->integer('amountSum');
             $table->unsignedBigInteger('creator_id'); // ID первого игрока (создателя)
             $table->unsignedBigInteger('opponent_id')->nullable(); // ID второго игрока (оппонента)
             $table->string('status')->default('Поиск игроков'); // Статус турнира
