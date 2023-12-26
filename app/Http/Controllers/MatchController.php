@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateTournamentRequest;
+use App\Models\Tournament;
 use Illuminate\Http\Request;
 
 class MatchController extends Controller
 {
     public function index()
     {
-        return view('layouts.tournaments');
+        $matches = Tournament::all();
+        return view('layouts.tournaments', compact('matches'));
     }
 
     public function create()
@@ -16,9 +19,25 @@ class MatchController extends Controller
         return view('main.create');
     }
 
-    public function store()
+    public function store(CreateTournamentRequest $request)
     {
-        return 'Страница создания';
+        $validatedData = $request->validated();
+
+        // Создание нового турнира
+        $tournament = new Tournament();
+        $tournament->name = $validatedData['name']; // Пример поля name
+        $tournament->game_type = "mlbb"; // Пример поля game_type
+        $tournament->number_of_players = $validatedData['number_of_players']; // Пример поля number_of_players
+        $tournament->creator_id = auth()->id(); // ID пользователя, который создал турнир
+
+        // Заполнение других полей, если они есть
+        // ...
+        $tournament->save();
+
+        // После сохранения, вы можете перенаправить пользователя на другую страницу
+        // или вернуть JSON-ответ, если это API
+        //return redirect()->route('tournaments.show', $tournament->id);
+        return route('/');
     }
 
     public function show($id)

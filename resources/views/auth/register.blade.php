@@ -2,7 +2,7 @@
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                <img src="{{ asset('img/logo-blitz.png') }}" style="width: 150px" alt="">
             </a>
         </x-slot>
 
@@ -16,7 +16,14 @@
             <div>
                 <x-label for="name" :value="__('Ник в игре')" />
 
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
+                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus placeholder=""/>
+            </div>
+
+            <!-- Telegram -->
+            <div class="mt-4">
+                <x-label for="telegram" :value="__('Telegram ID')" />
+
+                <x-input id="telegram" class="block mt-1 w-full" type="text" name="telegram" :value="old('telegram')" required autofocus placeholder="Например: gumball"/>
             </div>
 
             <!-- Email Address -->

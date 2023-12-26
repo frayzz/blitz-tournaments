@@ -1,4 +1,12 @@
-<ul class="nav nav-pills nav-fill p-5">
+<ul class="nav nav-pills nav-fill align-items-center p-3">
+    <li class="nav-item">
+        <a href="{{ route('/') }}">
+        <img src="{{ asset("img/logo-blitz.png") }}" style="width:100px;">
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link " href="{{ route('/') }}">Главное</a>
+    </li>
     <li class="nav-item">
         <a class="nav-link {{ Request::is('/') ? 'active' : '' }}" href="{{ route('/') }}">Турниры онлайн</a>
     </li>
@@ -25,7 +33,7 @@
                         {{ Auth::user()->name }}
                     </a>
                     <ul class="dropdown-menu justify-center" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="{{ route('profile') }}">Профиль</a></li>
+                        <li><a class="dropdown-item" href="{{ route('profile', auth()->id()) }}">Профиль</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <a class="dropdown-item" href="{{ route('logout') }}"

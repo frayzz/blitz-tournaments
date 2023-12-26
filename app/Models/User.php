@@ -41,4 +41,27 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function profile()
+    {
+        return $this->hasOne(UserProfile::class);
+    }
+
+    public function createdTournaments()
+    {
+        return $this->hasMany(Tournament::class, 'creator_id');
+    }
+
+    /**
+     * Турниры, в которых пользователь является оппонентом.
+     */
+    public function opponentTournaments()
+    {
+        return $this->hasMany(Tournament::class, 'opponent_id');
+    }
+
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'creator_id');
+    }
 }
