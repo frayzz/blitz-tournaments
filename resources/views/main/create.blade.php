@@ -4,6 +4,15 @@
     <div class="container">
         <div class="row">
             <h1 class="">Создать турнир</h1>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <form action="/matches" method="POST">
                 @csrf
                 <h6 class="mt-5 fw-bold">Игра ( На данный момент только MLBB )</h6>

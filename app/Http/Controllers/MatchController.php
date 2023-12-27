@@ -11,8 +11,8 @@ class MatchController extends Controller
 {
     public function index()
     {
-        $matches = Tournament::all();
-        return view('layouts.tournaments', compact('matches'));
+        $matches = Tournament::all()->where('status', 'search');
+        return view('layouts.personal.tournaments', compact('matches'));
     }
 
     public function create()
@@ -48,7 +48,7 @@ class MatchController extends Controller
 
                 return redirect('/');
             } else {
-                return 'Недостаточно средств на балансе';
+                return redirect()->back()->withErrors('Недостаточно средств на балансе');
             }
         } else {
             return 'Профиль пользователя не найден';
@@ -74,8 +74,24 @@ class MatchController extends Controller
         return 'Страница обновления';
     }
 
-    public function destroy($id)
+    public function start($match)
     {
-        return 'Страница удаления';
+        $match = Tournament::find($match);
+
+        if (!$match) {
+            // Обработка случая, когда турнир не найден
+            return redirect()->back()->withErrors('Турнир не найден.');
+        }
+
+        if ($match->creator_id == auth()->id()) {
+            return redirect()->back()->withErrors('Вы не можете участвовать в своем же турнире');
+        }
+
+        $match->status = 'start';
+        $match->opponent_id = auth()->id(); // Убедитесь, что пользователь авторизован
+        $match->save();
+
+        // Передача данных турнира в представление, если это необходимо
+        return view("layouts.personal.showMatch", ['match' => $match]);
     }
 }

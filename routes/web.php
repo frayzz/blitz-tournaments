@@ -24,6 +24,7 @@ Route::get('/matches/{match}', [MatchController::class, 'show'])->name('matches.
 Route::get('/matches/{match}/edit', [MatchController::class, 'edit'])->name('matches.edit');
 Route::put('/matches/{match}', [MatchController::class, 'update'])->name('matches.update');
 Route::delete('/matches/{match}', [MatchController::class, 'destroy'])->name('matches.destroy');
+Route::post('/matches/{match}/start', [MatchController::class, 'start'])->name('matches.start');
 
 Route::get('/rating', [RatingController::class, 'index'])->name('rating');
 
@@ -31,7 +32,6 @@ Route::get('/active', [ActiveController::class, 'index'])->name('active');
 
 Route::get('/profile/{userId}', [ProfileController::class, 'index'])->name('profile');
 
-Route::get('/takeChallenge/{userId}', [ProfileController::class, 'index'])->name('takeChallenge');
 /*
 Route::get('/dashboard', function () {
     return view('welcome');
