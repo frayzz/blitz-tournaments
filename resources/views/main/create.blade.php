@@ -15,7 +15,7 @@
                 </div>
                 <h6 class="mt-2 fw-bold">Сумма ставки</h6>
                 <div class="col-4 p-0 m-1">
-                    <input class="form-control betAmount" type="text" placeholder="Сумма ставки" aria-label="default input example" name="betAmount">
+                    <input class="form-control betAmount" type="number" placeholder="Сумма ставки" aria-label="default input example" name="amountSum">
                 </div>
                 <div>
                     <div class="fw-light fst-italic fs-10">Минимальная ставка 1 000тг*</div>

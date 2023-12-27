@@ -19,6 +19,7 @@ class CreateUserProfilesTable extends Migration
             $table->string('telegram')->nullable();
             $table->string('steam')->nullable();
             $table->string('instagram')->nullable();
+            $table->float('balance')->default(0);
             // Другие поля профиля
             $table->timestamps();
 

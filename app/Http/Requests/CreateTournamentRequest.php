@@ -15,7 +15,7 @@ class CreateTournamentRequest extends FormRequest
     {
         return [
             'name' => 'required|string', // Минимальная сумма ставки 1000тг
-            'betAmount' => 'required|numeric|min:1000', // Минимальная сумма ставки 1000тг
+            'amountSum' => 'required|numeric|min:1000', // Минимальная сумма ставки 1000тг
             'number_of_players' => 'required|in:2, 6, 10', // Допустимые варианты количества игроков
         ];
     }

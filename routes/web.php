@@ -30,6 +30,8 @@ Route::get('/rating', [RatingController::class, 'index'])->name('rating');
 Route::get('/active', [ActiveController::class, 'index'])->name('active');
 
 Route::get('/profile/{userId}', [ProfileController::class, 'index'])->name('profile');
+
+Route::get('/takeChallenge/{userId}', [ProfileController::class, 'index'])->name('takeChallenge');
 /*
 Route::get('/dashboard', function () {
     return view('welcome');

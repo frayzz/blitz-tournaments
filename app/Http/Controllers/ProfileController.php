@@ -7,8 +7,16 @@ use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
-    public function index(User $user)
+    public function index($userId)
     {
-        return view('user.profile');
+        $user = User::find($userId);
+
+        if (!$user) {
+            return response()->json(['error' => 'Пользователь не найден'], 404);
+        }
+
+        $user->load('profile');
+
+        return view('user.profile', compact('user'));
     }
 }
