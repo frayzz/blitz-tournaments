@@ -21,7 +21,7 @@
                         <thead>
                         <tr>
                             <th scope="col">Ник</th>
-                            <th scope="col">Количество</th>
+                            <th scope="col">Количество игроков</th>
                             <th scope="col">Ставка</th>
                             <th scope="col">Действие</th>
                             <th scope="col">Игра</th>
@@ -33,8 +33,9 @@
                                 <td>
                                     <a href="{{ route('profile', $match->creator->id) }}">{{ $match->creator->name }}</a>
                                 </td>
-                                <td><img src="{{ asset('img/userCol.png') }}" alt="">1vs1<img
-                                        src="{{ asset('img/userCol.png') }}" alt=""></td>
+                                <td>
+                                    {{ $match->number_of_players }}
+                                </td>
                                 <td class="font-weight-bolder" style="color:#169B00">{{ $match->amountSum }}тг</td>
                                 <td>
                                     <button type="button" class="btn btn-success p-3 accept-challenge-btn"
@@ -53,7 +54,6 @@
             </div>
         </div>
     </div>
-
     <!-- Модальное окно -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">

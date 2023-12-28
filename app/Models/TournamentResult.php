@@ -5,19 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UserProfile extends Model
+class TournamentResult extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        'tournament_id',
         'user_id',
-        'telegram',
-        'steam',
-        'instagram'
+        'photo_path'
     ];
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 }

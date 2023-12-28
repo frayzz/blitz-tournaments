@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateTournamentRequest;
 use App\Models\Tournament;
+use App\Models\TournamentResult;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -59,9 +60,16 @@ class MatchController extends Controller
         //return redirect()->route('tournaments.show', $tournament->id);
     }
 
-    public function show($id)
+    public function show($match)
     {
-        return 'Страница показа';
+        $match = Tournament::find($match);
+
+        if (!$match) {
+            // Обработка случая, когда турнир не найден
+            return redirect()->back()->withErrors('Турнир не найден.');
+        }
+
+        return view("layouts.personal.showMatch", ['match' => $match]);
     }
 
     public function edit($id)
@@ -87,11 +95,74 @@ class MatchController extends Controller
             return redirect()->back()->withErrors('Вы не можете участвовать в своем же турнире');
         }
 
-        $match->status = 'start';
-        $match->opponent_id = auth()->id(); // Убедитесь, что пользователь авторизован
-        $match->save();
+        $user = auth()->user();
 
-        // Передача данных турнира в представление, если это необходимо
-        return view("layouts.personal.showMatch", ['match' => $match]);
+        if ($user && $user->profile) {
+            $profile = $user->profile;
+            $balance = $profile->balance;
+
+            if ($balance >= $match['amountSum']) {
+                $profile->balance -= $match['amountSum'];
+                $profile->save(); // Сохраняем измененный баланс
+
+                $match->status = 'start';
+                $match->opponent_id = $user->id; // Убедитесь, что пользователь авторизован
+                $match->save();
+
+                // Передача данных турнира в представление, если это необходимо
+                return view("layouts.personal.showMatch", ['match' => $match]);
+            } else {
+                return redirect()->back()->withErrors('Недостаточно средств на балансе');
+            }
+        } else {
+            return 'Профиль пользователя не найден';
+        }
+    }
+
+    public function storeResults(Request $request)
+    {
+        // Валидация входящих данных
+        $validated = $request->validate([
+            'tournament_id' => 'required|exists:tournaments,id',
+            'status' => 'required|string',
+            'user_id' => 'required|exists:users,id',
+            'photo_path' => 'required|image|max:2048', // ограничение размера файла до 2МБ
+        ]);
+
+        // Проверяем, есть ли уже результат для данного пользователя и турнира
+        $existingResult = TournamentResult::where('tournament_id', $request->tournament_id)
+            ->where('user_id', $request->user_id)
+            ->first();
+
+        if ($existingResult) {
+            // Если результат уже существует, возвращаем ошибку
+            return redirect()->back()->withErrors('Вы уже добавили фото для этого турнира.');
+        }
+
+        if ($validated['status'] == 'start') {
+            $match = Tournament::find($validated['tournament_id']);
+            if ($match) {
+                $match->status = 'summarizing';
+                $match->save(); // Добавлены скобки для вызова метода
+            }
+        }
+
+        // Обработка и сохранение файла
+        if ($request->hasFile('photo_path')) {
+            $path = $request->file('photo_path')->store('tournament_results', 'public');
+
+            // Создание новой записи в таблице результатов
+            $result = new TournamentResult();
+            $result->tournament_id = $validated['tournament_id'];
+            $result->user_id = $validated['user_id'];
+            $result->photo_path = $path;
+            $result->save();
+
+            // Перенаправление с сообщением об успехе
+            return redirect()->back()->with('success', 'Результаты успешно сохранены.');
+        }
+
+        // Перенаправление с сообщением об ошибке, если файл не был загружен
+        return redirect()->back()->with('error', 'Ошибка при загрузке файла.');
     }
 }

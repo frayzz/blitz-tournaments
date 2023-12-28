@@ -18,19 +18,27 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [MatchController::class, 'index'])->name('/');
-Route::get('/matches/create', [MatchController::class, 'create'])->name('matches.create');
-Route::post('/matches', [MatchController::class, 'store'])->name('matches.store');
-Route::get('/matches/{match}', [MatchController::class, 'show'])->name('matches.show');
-Route::get('/matches/{match}/edit', [MatchController::class, 'edit'])->name('matches.edit');
-Route::put('/matches/{match}', [MatchController::class, 'update'])->name('matches.update');
-Route::delete('/matches/{match}', [MatchController::class, 'destroy'])->name('matches.destroy');
-Route::post('/matches/{match}/start', [MatchController::class, 'start'])->name('matches.start');
 
+Route::middleware('auth')->group(function () {
+    Route::get('/matches/create', [MatchController::class, 'create'])->name('matches.create');
+    Route::post('/matches', [MatchController::class, 'store'])->name('matches.store');
+    Route::get('/matches/{match}', [MatchController::class, 'show'])->name('matches.show');
+    Route::get('/matches/{match}/edit', [MatchController::class, 'edit'])->name('matches.edit');
+    Route::put('/matches/{match}', [MatchController::class, 'update'])->name('matches.update');
+    Route::delete('/matches/{match}', [MatchController::class, 'destroy'])->name('matches.destroy');
+    Route::post('/matches/{match}/start', [MatchController::class, 'start'])->name('matches.start');
+
+    Route::post('/matches/result/store', [MatchController::class, 'storeResults'])->name('matches.result.store');
+
+    Route::get('/profile/{userId}', [ProfileController::class, 'index'])->name('profile');
+    Route::get('/profile/{userId}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile/{userId}/update', [ProfileController::class, 'update'])->name('profile.update');
+});
 Route::get('/rating', [RatingController::class, 'index'])->name('rating');
 
 Route::get('/active', [ActiveController::class, 'index'])->name('active');
 
-Route::get('/profile/{userId}', [ProfileController::class, 'index'])->name('profile');
+
 
 /*
 Route::get('/dashboard', function () {
