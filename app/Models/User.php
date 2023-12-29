@@ -64,4 +64,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(User::class, 'creator_id');
     }
+
+    public function balanceTransactions()
+    {
+        return $this->hasMany(BalanceTransaction::class);
+    }
 }

@@ -52,9 +52,11 @@
                 </li>
             @endguest
             @auth
+                @if(Auth::user()->profile)
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Ваш баланс: {{ Auth::user()->profile->balance }}тг</a>
+                    <a class="nav-link" href="{{ route('balance') }}">Ваш баланс: {{ Auth::user()->profile->balance }}тг</a>
                 </li>
+                @endif
             @endauth
         </ul>
     </div>

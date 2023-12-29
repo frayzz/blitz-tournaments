@@ -47,7 +47,9 @@ class RegisteredUserController extends Controller
         ]);
 
         $user->profile()->create([
+            'user_id' => $user->id,
             'telegram' => $request->telegram,
+            'balance' => 0
         ]);
 
         event(new Registered($user));

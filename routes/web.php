@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActiveController;
+use App\Http\Controllers\BalanceController;
 use App\Http\Controllers\MatchController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RatingController;
@@ -33,6 +34,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/{userId}', [ProfileController::class, 'index'])->name('profile');
     Route::get('/profile/{userId}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile/{userId}/update', [ProfileController::class, 'update'])->name('profile.update');
+
+    Route::get('/balance', [BalanceController::class, 'index'])->name('balance');
+    Route::post('/balance', [BalanceController::class, 'deposit'])->name('balance.deposit');
+    Route::get('/balance/withdrawal', [BalanceController::class, 'withdrawalIndex'])->name('balance.withdrawal');
+    Route::post('/balance/withdrawal', [BalanceController::class, 'withdrawal'])->name('balance.withdrawal');
 });
 Route::get('/rating', [RatingController::class, 'index'])->name('rating');
 

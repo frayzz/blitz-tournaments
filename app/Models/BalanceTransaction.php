@@ -5,16 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UserProfile extends Model
+class BalanceTransaction extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'user_id',
-        'telegram',
-        'steam',
-        'instagram',
-        'balance'
+        'phone_number',
+        'operation_type',
+        'amountSum',
+        'full_name',
+        'status'
     ];
 
     public function user()
