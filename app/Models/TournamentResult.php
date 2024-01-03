@@ -14,4 +14,14 @@ class TournamentResult extends Model
         'user_id',
         'photo_path'
     ];
+
+    public function tournament()
+    {
+        return $this->belongsTo(Tournament::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BalanceTransaction;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -72,5 +73,32 @@ class BalanceController extends Controller
         } else {
             return redirect()->back()->with('error', 'Профиль пользователя не найден');
         }
+    }
+    public function depositAccept($transferId) {
+        $transfer = BalanceTransaction::find($transferId);
+        $user = User::find($transfer->user_id);
+
+        if ($user) {
+            // Получаем профиль пользователя
+            $profile = $user->profile;
+            $profile->balance += $transfer->amountSum;
+            // Сохраняем изменения в профиле
+            $profile->save();
+
+            $transfer->status = true;
+            $transfer->save();
+
+            return redirect()->back()->with('success', 'Баланс успешно пополнен');
+        } else {
+            return redirect()->back()->with('error', 'Пользователь не найден');
+        }
+    }
+
+    public function withdrawalAccept($transerId) {
+        $transfer = BalanceTransaction::find($transerId);
+        $transfer->status = true;
+        $transfer->save();
+
+        return redirect()->back()->with('success', 'Баланс успешно выведен');
     }
 }

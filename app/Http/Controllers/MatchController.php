@@ -5,8 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateTournamentRequest;
 use App\Models\Tournament;
 use App\Models\TournamentResult;
+use App\Models\User;
 use Auth;
 use Illuminate\Http\Request;
+use App\Mail\StartMatch;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class MatchController extends Controller
 {
@@ -109,6 +113,15 @@ class MatchController extends Controller
                 $match->opponent_id = $user->id; // Убедитесь, что пользователь авторизован
                 $match->save();
 
+                // Отправка уведомления
+                try {
+                    Mail::to($match->creator->email)->send(new StartMatch());
+                } catch (\Exception $e) {
+                    // Обработка ошибки
+                    // Здесь вы можете записать ошибку в лог, уведомить пользователя и т.д.
+                    Log::error('Ошибка при отправке письма: '.$e->getMessage());
+                }
+
                 // Передача данных турнира в представление, если это необходимо
                 return view("layouts.personal.showMatch", ['match' => $match]);
             } else {
@@ -164,5 +177,35 @@ class MatchController extends Controller
 
         // Перенаправление с сообщением об ошибке, если файл не был загружен
         return redirect()->back()->with('error', 'Ошибка при загрузке файла.');
+    }
+
+    public function winner(Request $request, $matchId) {
+        $validated = $request->validate([
+            'winner_id' => 'required',
+        ]);
+
+        $match = Tournament::find($matchId);
+        if (!$match) {
+            return redirect()->back()->with('error', 'Матч не найден');
+        }
+
+        $match->update([
+            'status' => 'finish',
+            'winner_id' => $validated['winner_id'],
+        ]);
+
+        $this->updateUserProfileBalance($validated['winner_id'], $match->amountSum * 0.9);
+        $this->updateUserProfileBalance(auth()->id(), $match->amountSum * 0.1);
+
+        return redirect()->back()->with('success', 'Результат успешно обновлён.');
+    }
+
+    private function updateUserProfileBalance($userId, $amount) {
+        $user = User::find($userId);
+        if (!$user) {
+            return;
+        }
+
+        $user->profile->increment('balance', $amount);
     }
 }

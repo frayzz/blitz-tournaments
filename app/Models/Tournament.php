@@ -21,4 +21,9 @@ class Tournament extends Model
     {
         return $this->belongsTo(User::class, 'opponent_id');
     }
+
+    public function results()
+    {
+        return $this->hasMany(TournamentResult::class);
+    }
 }

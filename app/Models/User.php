@@ -12,6 +12,16 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    const ROLE_ADMIN = 0;
+    const ROLE_READER = 1;
+
+    public static function getRoles() {
+        return [
+            self::ROLE_ADMIN => 'Админ',
+            self::ROLE_READER => 'Читатель',
+        ];
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -21,6 +31,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role'
     ];
 
     /**
@@ -47,19 +58,9 @@ class User extends Authenticatable
         return $this->hasOne(UserProfile::class);
     }
 
-    public function createdTournaments()
-    {
-        return $this->hasMany(Tournament::class, 'creator_id');
-    }
-
     /**
      * Турниры, в которых пользователь является оппонентом.
      */
-    public function opponentTournaments()
-    {
-        return $this->hasMany(Tournament::class, 'opponent_id');
-    }
-
     public function creator()
     {
         return $this->belongsTo(User::class, 'creator_id');
@@ -68,5 +69,10 @@ class User extends Authenticatable
     public function balanceTransactions()
     {
         return $this->hasMany(BalanceTransaction::class);
+    }
+
+    public function tournamentResults()
+    {
+        return $this->hasMany(TournamentResult::class);
     }
 }
