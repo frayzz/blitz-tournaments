@@ -38,6 +38,7 @@ class RegisteredUserController extends Controller
             'telegram' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'mlbb_id' => ['required', 'string', 'max:255'],
         ]);
 
         $user = User::create([
@@ -50,6 +51,7 @@ class RegisteredUserController extends Controller
         $user->profile()->create([
             'user_id' => $user->id,
             'telegram' => $request->telegram,
+            'mlbb_id' => $request->mlbb_id,
             'balance' => 0
         ]);
 

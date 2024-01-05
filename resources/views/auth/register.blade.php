@@ -19,9 +19,18 @@
                 <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus placeholder=""/>
             </div>
 
+            <!-- Mobile Legends ID -->
+            <div>
+                <x-label for="mlbb_id" :value="__('ID в игре Mobile legends')" />
+
+                <x-input id="mlbb_id" class="block mt-1 w-full" type="text" name="mlbb_id" :value="old('mlbb_id')" required autofocus placeholder="Например: 4949781564 (4984)"/>
+
+                <x-label for="name" :value="__('можно скопировать в профиле игры, под вашим ником')" />
+            </div>
+
             <!-- Telegram -->
             <div class="mt-4">
-                <x-label for="telegram" :value="__('Telegram ID')" />
+                <x-label for="telegram" :value="__('Telegram ник ( для связи администрации в случае спорных моментов )')" />
 
                 <x-input id="telegram" class="block mt-1 w-full" type="text" name="telegram" :value="old('telegram')" required autofocus placeholder="Например: gumball"/>
             </div>

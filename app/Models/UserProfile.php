@@ -14,6 +14,7 @@ class UserProfile extends Model
         'telegram',
         'steam',
         'instagram',
+        'mlbb_id',
         'balance'
     ];
 

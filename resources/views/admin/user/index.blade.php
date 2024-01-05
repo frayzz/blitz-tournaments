@@ -40,6 +40,7 @@
                                         <th>ID</th>
                                         <th>Название</th>
 										<th>Почта</th>
+                                        <th>Роль</th>
                                         <th colspan="3" class="text-center">Действие</th>
                                     </tr>
                                     </thead>
@@ -48,7 +49,8 @@
                                         <tr>
                                             <td>{{ $user->id }}</td>
                                             <td>{{ $user->name }}</td>
-											<td>{{ $user->email_verified_at }}</td>
+											<td>{{ $user->email }}</td>
+                                            <td>{{ $user->role }}</td>
                                             <td class="text-center"><a href="{{ route('admin.user.show', $user->id ) }}"><i
                                                         class="far fa-eye"></i></a></td>
                                             <td class="text-center"><a href="{{ route('admin.user.edit', $user->id ) }}"

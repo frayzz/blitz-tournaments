@@ -68,6 +68,7 @@ class ProfileController extends Controller
             'telegram' => 'string|max:255',
             'steam' => 'nullable|string|max:255',
             'instagram' => 'nullable|string|max:255',
+            'mlbb_id' => 'string|max:255',
         ]);
 
         // Находим пользователя и его профиль
@@ -84,6 +85,7 @@ class ProfileController extends Controller
                 'telegram' => $validatedData['telegram'],
                 'steam' => $validatedData['steam'],
                 'instagram' => $validatedData['instagram'],
+                'mlbb_id' => $validatedData['mlbb_id'],
             ]);
         }
 

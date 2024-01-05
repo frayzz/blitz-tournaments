@@ -13,6 +13,6 @@ class StartMatch extends Mailable
 
     public function build()
     {
-        return $this->subject('Match Start!')->view('emails.test'); // Используйте шаблон Blade для письма
+        return $this->subject('Match Start!')->view('emails.start'); // Используйте шаблон Blade для письма
     }
 }

@@ -47,13 +47,13 @@
                                 <div>
                                     ID игрока {{ $match->creator->name }}.
                                 </div>
-                                <button type="button" class="btn btn-outline-secondary copy-btn" data-copy-text="Текст для копирования 1">Скопировать ID</button>
+                                <button type="button" class="btn btn-outline-secondary copy-btn" data-copy-text="{{ $match->creator->profile->mlbb_id }}">Скопировать ID: {{ $match->creator->profile->mlbb_id }}</button>
                             </div>
                             <div>
                                 <div>
                                     ID игрока {{ $match->opponent->name }}.
                                 </div>
-                                <button type="button" class="btn btn-outline-secondary copy-btn" data-copy-text="Текст для копирования 2">Скопировать ID</button>
+                                <button type="button" class="btn btn-outline-secondary copy-btn" data-copy-text="{{ $match->opponent->profile->mlbb_id }}">Скопировать ID: {{ $match->opponent->profile->mlbb_id }}</button>
                             </div>
                         </div>
                     </div>
