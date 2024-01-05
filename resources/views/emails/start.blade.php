@@ -5,6 +5,6 @@
 </head>
 <body>
 <h1>Нажмите на ссылку для быстрого перехода</h1>
-<a href="http://blitz-tournaments.almatythinks.kz">Перейти на сайт</a>
+<a href="http://blitz-tournaments.almatythinks.kz/active">Перейти на сайт</a>
 </body>
 </html>
